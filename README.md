@@ -13,18 +13,17 @@ The tutorial begins with basic motor control and gradually progresses toward sen
 
 * 01: First Program
 * 02: Motor Control
-* 03: Drivebase Movement (coming soon)
-* 04: Variables and Calibration (coming soon)
-* 05: Loops (coming soon)
-* 06: Conditions and Decisions (coming soon)
-* 07: Functions (coming soon)
-* 08: Color Sensor (coming soon)
-* 09: Distance Sensor (coming soon)
-* 10: Gyro and Orientation (coming soon)
-* 11: Search and React (coming soon)
-* 12: Timers and Match Logic (coming soon)
-* 13: Double Tennis (coming soon)
-* 14: HuskyLens Integration (coming soon)
+* 03: Drivebase Movement
+* 04: Loops (actual TBA)
+* 05: Conditions and Decisions (coming soon)
+* 06: Functions (coming soon)
+* 07: Color Sensor (coming soon)
+* 08: Distance Sensor (coming soon)
+* 09: Gyro and Orientation (coming soon)
+* 10: Search and React (coming soon)
+* 11: Timers and Match Logic (coming soon)
+* 12: Double Tennis (coming soon)
+* 13: HuskyLens Integration (coming soon)
 
 > The structure may be adjusted as the tutorial progresses.
 
@@ -50,11 +49,12 @@ GearsBot commonly uses the older EV3-style Pybricks API, while an actual SPIKE P
 * [DriveBase Documentation](https://docs.pybricks.com/en/latest/robotics.html)
 * [Pybricks Runner for VS Code](https://open-vsx.org/extension/AnandSingh/pybricks-runner)
 
-### Competitions
+### Relevant Competitions
 
 * [Philippine Robot Olympiad](https://felta.ph/pro/download.html)
 * [PRO 2025 RoboSports Double Tennis General Rules](https://felta.ph/pro/files/2025/PRO-2025-RoboSports-Double-Tennis-General-Rules.pdf)
 * [IDE Series 2026 Singapore](https://ideseries.org/ide2026/)
+* [First Lego League 2026-2027 (Bioglow) Philippines](https://felta.ph/pdf/fll/16th_FLL_Philippines_2026-2027_BIOGLOW_Season_Calendar.pdf)
 
 ### HuskyLens
 

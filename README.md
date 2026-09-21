@@ -14,7 +14,7 @@ The tutorial begins with basic motor control and gradually progresses toward sen
 * 01: First Program
 * 02: Motor Control
 * 03: Drivebase Movement
-* 04: Loops (actual TBA)
+* 04: Loops
 * 05: Conditions and Decisions (coming soon)
 * 06: Functions (coming soon)
 * 07: Color Sensor (coming soon)
@@ -63,8 +63,8 @@ GearsBot commonly uses the older EV3-style Pybricks API, while an actual SPIKE P
 
 ## 📝 Notes
 
-* Simulator programs are stored in `simulator.py`.
-* Physical SPIKE Prime programs are stored in `actual.py`.
+* Simulator programs are stored in `simulator.py` or `simulator_*.py`.
+* Physical SPIKE Prime programs are stored in `actual.py` or `actual_*.py`.
 * Motor and sensor ports may need to be changed based on the selected simulator robot or physical robot configuration.
 * Wheel diameter, axle track, speed, and sensor thresholds may require calibration on the actual robot.
 * The simulator is primarily used to test program logic, while the physical robot is used to test hardware behavior and calibration.

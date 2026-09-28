@@ -15,8 +15,8 @@ The tutorial begins with basic motor control and gradually progresses toward sen
 * 02: Motor Control
 * 03: Drivebase Movement
 * 04: Loops
-* 05: Conditions and Decisions (coming soon)
-* 06: Functions (coming soon)
+* 05: Conditions and Decisions (actual TBA)
+* 06: Functions (actual TBA)
 * 07: Color Sensor (coming soon)
 * 08: Distance Sensor (coming soon)
 * 09: Gyro and Orientation (coming soon)

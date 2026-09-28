@@ -37,6 +37,13 @@ The activities focus on `for` loops and show how repetition can be used for move
 5. Run the program.
 6. Observe how the loop changes the robot's movement.
 
+### Bonus: Maze Map Challenge (seed 93)
+
+`simulator_mazemap93.py` contains the solution for the Maze Map Challenge (with a fixed world random seed of 93 for repeatability)
+as it facilitates a good environment for practicing the use of for loops to aid in forming complex robot behaviors.
+
+![Animation of Maze Map Challenge (seed 93) Solution](GearsBot_MazeMapSeed93_Solution.gif)
+
 ## 🧱 Running the Actual Programs
 
 1. Connect the drive motors to the SPIKE Prime hub.

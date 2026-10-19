@@ -44,7 +44,9 @@ The surrounding white area serves as the background.
    ```
 
 5. Adjust the ground dimensions and robot's starting position as needed.
-6. Select a robot equipped with a downward-facing color sensor.
+6. After configuration adjustment, save the world to file by clicking **File → Save world to file**. A JSON file will then be downloaded entitled `custom_world.json` (modify the name according to preference).
+7. In the Simulator tab, load the JSON world file by clicking **Worlds → Load from file**. A window will appear where you can navigate to the saved world. Select it and automatically, the world will be loaded on the simulator.
+8. Select a robot equipped with a downward-facing color sensor in order to effectively test the custom world.
 
 ## 🧪 Testing the Color Sensor
 

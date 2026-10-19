@@ -68,3 +68,92 @@ GearsBot commonly uses the older EV3-style Pybricks API, while an actual SPIKE P
 * Motor and sensor ports may need to be changed based on the selected simulator robot or physical robot configuration.
 * Wheel diameter, axle track, speed, and sensor thresholds may require calibration on the actual robot.
 * The simulator is primarily used to test program logic, while the physical robot is used to test hardware behavior and calibration.
+
+## 🌍 Custom World Generator
+
+This repository includes `generate_world.py`, a command-line tool for generating custom ground images for the [GearsBot Simulator](https://gears.aposteriori.com.sg/).
+
+The tool uses **Pillow** to create reusable training arenas for different robotics lessons.
+
+### 🛠️ Setup
+
+Unlike the Pybricks lesson scripts, which run in GearsBot or on the actual SPIKE Prime robot, the world generator runs locally using Python.
+
+**1. Create a virtual environment**
+
+From the repository's root directory:
+
+```bash
+python -m venv .venv
+```
+
+**2. Activate the virtual environment**
+
+On Windows (PowerShell):
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+On Windows (Command Prompt):
+
+```cmd
+.venv\Scripts\activate.bat
+```
+
+On macOS or Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+**3. Install Pillow**
+
+```bash
+python -m pip install Pillow
+```
+
+No additional packages are required for the world generator.
+
+### ▶️ Generating a World
+
+Run the script from the repository's root directory:
+
+```bash
+python generate_world.py --preset color-test --width 1200 --height 800 --output 07_color_sensor/worlds/color_test.png
+```
+
+This generates a PNG image containing three colored patches (red, green, and blue) on a white background.
+
+The output directory is automatically created if it does not exist.
+
+### ⚙️ CLI Arguments
+
+| Argument | Description | Default |
+|---|---|---|
+| `--preset` | Selects the world layout | `color-test` |
+| `--width` | Image width in pixels | `1200` |
+| `--height` | Image height in pixels | `800` |
+| `--background` | Background color | `white` |
+| `--output` | Output PNG file path | `world.png` |
+| `--list-presets` | Displays available world presets | — |
+
+To display all available commands:
+
+```bash
+python generate_world.py --help
+```
+
+To list available presets:
+
+```bash
+python generate_world.py --list-presets
+```
+
+### 📌 Notes
+
+- The generated PNG is a **ground texture**, not a complete GearsBot world configuration.
+- Ground dimensions, robot placement, and other world settings must be configured separately in GearsBot's World Builder.
+- Generated images can be hosted on GitHub and loaded into GearsBot using their raw image URLs.
+- The tool is designed to support additional world presets in future lessons.
+- The `.venv/` directory should be excluded from version control using `.gitignore`.

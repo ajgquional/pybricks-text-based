@@ -4,8 +4,9 @@ GearsBot World Image Generator
 
 Generate reusable ground images for robotics lessons using Pillow.
 
-Example:
-    python generate_world.py --preset color-test --output 07_color_sensor/worlds/color_test.png
+Examples:
+    python generate_world.py --preset color-test --output color_test.png
+    python generate_world.py --preset color-stop --output color_stop.png
 """
 
 import argparse
@@ -17,12 +18,14 @@ from PIL import Image, ImageColor, ImageDraw
 # Available world presets.
 PRESETS = {
     "color-test": "Three colored patches for testing a color sensor.",
+    "color-stop": "Straight driving arena with a red stopping zone.",
+    "color-maze": "Square arena with color-controlled navigation markers.",
 }
 
 
 def create_color_test(draw, width, height):
     """
-    Draw a simple arena with red, green, and blue patches.
+    Draw an arena with red, green, and blue patches.
 
     Args:
         draw: Pillow drawing object.
@@ -31,7 +34,6 @@ def create_color_test(draw, width, height):
     """
     colors = ["#E53935", "#43A047", "#1E88E5"]
 
-    # Reserve space around and between the color patches.
     margin_x = width * 0.08
     gap = width * 0.06
 
@@ -41,7 +43,6 @@ def create_color_test(draw, width, height):
     top = (height - patch_height) / 2
     bottom = top + patch_height
 
-    # Draw three equally sized color patches.
     for index, color in enumerate(colors):
         left = margin_x + index * (patch_width + gap)
         right = left + patch_width
@@ -49,6 +50,99 @@ def create_color_test(draw, width, height):
         draw.rectangle(
             (round(left), round(top), round(right), round(bottom)),
             fill=color,
+        )
+
+
+def create_color_stop(draw, width, height):
+    """
+    Draw a straight driving arena with a red strip near the top.
+
+    The robot should start near the bottom of the image and
+    travel upward until its color sensor detects red.
+
+    Args:
+        draw: Pillow drawing object.
+        width: Image width in pixels.
+        height: Image height in pixels.
+    """
+    margin_x = width * 0.08
+    margin_y = height * 0.08
+
+    # Draw the light-gray driving surface.
+    draw.rectangle(
+        (
+            round(margin_x),
+            round(margin_y),
+            round(width - margin_x),
+            round(height - margin_y),
+        ),
+        fill="#F1F1F1",
+    )
+
+    # Draw the red stopping zone near the top.
+    red_top = height * 0.14
+    red_bottom = height * 0.30
+
+    draw.rectangle(
+        (
+            round(margin_x),
+            round(red_top),
+            round(width - margin_x),
+            round(red_bottom),
+        ),
+        fill="#E53935",
+    )
+
+
+def create_color_maze(draw, width, height):
+    """
+    Draw a square color-command maze.
+
+    The robot starts near the bottom center, facing upward.
+
+    Navigation sequence:
+        Blue  -> Turn left
+        Green -> Turn right
+        Green -> Turn right
+        Blue  -> Turn left
+        Red   -> Stop
+
+    Args:
+        draw: Pillow drawing object.
+        width: Image width in pixels.
+        height: Image height in pixels.
+    """
+    colors = {
+        "blue": "#1E88E5",
+        "green": "#43A047",
+        "red": "#E53935",
+    }
+
+    # Marker centers as fractions of image dimensions.
+    markers = [
+        (0.50, 0.75, "blue"),   # First turn: left.
+        (0.20, 0.75, "green"),  # Second turn: right.
+        (0.20, 0.40, "green"),  # Third turn: right.
+        (0.80, 0.40, "blue"),   # Fourth turn: left.
+        (0.80, 0.16, "red"),    # Finish.
+    ]
+
+    # Large markers make color detection more reliable.
+    marker_size = min(width, height) * 0.12
+    half_size = marker_size / 2
+
+    for x_fraction, y_fraction, color in markers:
+        center_x = width * x_fraction
+        center_y = height * y_fraction
+
+        draw.rectangle(
+            (
+                round(center_x - half_size),
+                round(center_y - half_size),
+                round(center_x + half_size),
+                round(center_y + half_size),
+            ),
+            fill=colors[color],
         )
 
 
@@ -69,7 +163,12 @@ def generate_world(preset, width, height, background, output):
     if preset == "color-test":
         create_color_test(draw, width, height)
 
-    # Create the output folder if it does not exist.
+    elif preset == "color-stop":
+        create_color_stop(draw, width, height)
+
+    elif preset == "color-maze":
+        create_color_maze(draw, width, height)
+
     output_path = Path(output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -81,7 +180,7 @@ def generate_world(preset, width, height, background, output):
 
 
 def main():
-    """Read command-line arguments and generate the world image."""
+    """Read CLI arguments and generate the selected world image."""
     parser = argparse.ArgumentParser(
         description="Generate custom ground images for GearsBot.",
     )
@@ -134,9 +233,6 @@ def main():
             print(f"  {name}: {description}")
 
         return
-
-    if args.width <= 0 or args.height <= 0:
-        parser.error("Image dimensions must be positive integers.")
 
     if args.width < 300 or args.height < 200:
         parser.error("Minimum image dimensions are 300 x 200 pixels.")

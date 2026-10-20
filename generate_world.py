@@ -94,18 +94,22 @@ def create_color_stop(draw, width, height):
     )
 
 
+
 def create_color_maze(draw, width, height):
     """
-    Draw a square color-command maze.
+    Draw a color-command maze with rectangular markers.
 
     The robot starts near the bottom center, facing upward.
 
     Navigation sequence:
-        Blue  -> Turn left
-        Green -> Turn right
-        Green -> Turn right
-        Blue  -> Turn left
-        Red   -> Stop
+        Blue  -> Turn left.
+        Green -> Turn right.
+        Green -> Turn right.
+        Blue  -> Turn left.
+        Red   -> Stop.
+
+    The markers are narrow in the direction of travel
+    and wider across the robot's path.
 
     Args:
         draw: Pillow drawing object.
@@ -118,29 +122,38 @@ def create_color_maze(draw, width, height):
         "red": "#E53935",
     }
 
-    # Marker centers as fractions of image dimensions.
+    # Marker positions from the original Color Maze.
+    # Each tuple contains (x, y, color, incoming direction).
     markers = [
-        (0.50, 0.75, "blue"),   # First turn: left.
-        (0.20, 0.75, "green"),  # Second turn: right.
-        (0.20, 0.40, "green"),  # Third turn: right.
-        (0.80, 0.40, "blue"),   # Fourth turn: left.
-        (0.80, 0.16, "red"),    # Finish.
+        (0.50, 0.75, "blue", "vertical"),
+        (0.20, 0.75, "green", "horizontal"),
+        (0.20, 0.40, "green", "vertical"),
+        (0.80, 0.40, "blue", "horizontal"),
+        (0.80, 0.16, "red", "vertical"),
     ]
 
-    # Large markers make color detection more reliable.
-    marker_size = min(width, height) * 0.12
-    half_size = marker_size / 2
+    # Marker dimensions relative to the image size.
+    marker_width = min(width, height) * 0.10
+    marker_thickness = min(width, height) * 0.025
 
-    for x_fraction, y_fraction, color in markers:
+    for x_fraction, y_fraction, color, direction in markers:
         center_x = width * x_fraction
         center_y = height * y_fraction
 
+        # Orient each marker across the incoming robot path.
+        if direction == "vertical":
+            half_width = marker_width / 2
+            half_height = marker_thickness / 2
+        else:
+            half_width = marker_thickness / 2
+            half_height = marker_width / 2
+
         draw.rectangle(
             (
-                round(center_x - half_size),
-                round(center_y - half_size),
-                round(center_x + half_size),
-                round(center_y + half_size),
+                round(center_x - half_width),
+                round(center_y - half_height),
+                round(center_x + half_width),
+                round(center_y + half_height),
             ),
             fill=colors[color],
         )

@@ -115,15 +115,15 @@ python -m pip install Pillow
 
 No additional packages are required for the world generator.
 
-### ▶️ Generating a World
+### ▶️ Generating a Custom World Ground Image
 
 Run the script from the repository's root directory:
 
 ```bash
-python generate_world.py --preset color-test --width 1200 --height 800 --output 07_color_sensor/worlds/color_test.png
+python generate_world.py --preset <preset-name> --width <width> --height <height> --background <color> --output <output-path-with-image-filename>
 ```
 
-This generates a PNG image containing three colored patches (red, green, and blue) on a white background.
+This generates a PNG image in the output path specified.
 
 The output directory is automatically created if it does not exist.
 
@@ -138,7 +138,7 @@ The output directory is automatically created if it does not exist.
 | `--output` | Output PNG file path | `world.png` |
 | `--list-presets` | Displays available world presets | — |
 
-To display all available commands:
+To display all available commands and to view the command-line help:
 
 ```bash
 python generate_world.py --help
@@ -150,10 +150,30 @@ To list available presets:
 python generate_world.py --list-presets
 ```
 
+**Note:** Replace the placeholders with your preferred values. The selected preset must be supported by `generate_world.py`.
+
+## 🚀 Importing the World Image in GearsBot World Builder and Extracting it as JSON
+
+1. Generate the PNG image using the script.
+2. Open the [GearsBot Simulator](https://gears.aposteriori.com.sg/).
+2. Open **Worlds → World Builder**.
+3. Select the ground and locate its image URL setting (`imageURL`).
+4. Enter the raw GitHub URL of the generated PNG:
+
+   ```text
+   https://raw.githubusercontent.com/ajgquional/pybricks-text-based/main/<image-path>
+   ```
+
+5. Adjust the ground dimensions and robot's starting position as needed.
+6. After configuration adjustment, save the world to file by clicking **File → Save world to file**. A JSON file will then be downloaded entitled `custom_world.json` (modify the name after download, according to preference). This world configuration extraction as a JSON file is important for future world reuse.
+7. In the Simulator tab, load the JSON world file by clicking **Worlds → Load from file**. A window will appear where you can navigate to the saved world. Select it and automatically, the world will be loaded on the simulator.
+
+> The PNG image defines the visual ground layout, while the JSON file stores the world configuration.
+
 ### 📌 Notes
 
-- The generated PNG is a **ground texture**, not a complete GearsBot world configuration.
-- Ground dimensions, robot placement, and other world settings must be configured separately in GearsBot's World Builder.
-- Generated images can be hosted on GitHub and loaded into GearsBot using their raw image URLs.
-- The tool is designed to support additional world presets in future lessons.
-- The `.venv/` directory should be excluded from version control using `.gitignore`.
+- The script generates PNG images, not complete GearsBot world JSON files.
+- Image dimensions are specified in pixels.
+- Available presets are defined in the PRESETS dictionary inside generate_world.py.
+- Generated images can be hosted on GitHub and loaded into GearsBot using their raw image URLs. Should pre-made images are to be used, the use of `generate_world.py` can be bypassed. Instead, you can proceed to the creation of the JSON file for the world to be used in the Simulator.
+- The tool is designed to support additional world presets in future lessons. As such, generated images and exported JSON files can be stored together in the appropriate lesson's worlds/ directory.

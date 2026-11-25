@@ -185,13 +185,143 @@ The robot follows the instructions until it reaches the red marker.
 
 **Try this:** Rearrange the markers or modify the turning angles. Can you create a different route?
 
-### Activity 4: Line Following 🚧
+### Activity 4: Line Following — Simple Curves
 
-**Goal:** Make the robot follow a line by continuously measuring reflected light intensity.
+**Goal:** Program a robot to follow a black line by continuously measuring reflected light intensity and adjusting its direction.
 
-This activity will introduce feedback-based steering using `reflection()`.
+**World:** Line Following Challenges
 
-*Coming soon.*
+**Challenge:** Simple Curves
+
+**Script:** [`simulator_simple_curves_line_follower.py`](simulator_simple_curves_line_follower.py)
+
+#### 🌍 Setting Up the Simulator
+
+Unlike the previous activities, this activity uses a built-in GearsBot world. There is no need to download or import a custom JSON file.
+
+1. Open the [GearsBot Simulator](https://gears.aposteriori.com.sg/).
+2. Navigate to the **Worlds** tab.
+3. Select **Line Following Challenges**.
+4. Select the **Simple Curves** challenge.
+5. Make sure the robot has a downward-facing Color Sensor connected to Port S1.
+6. Load and run the Python script.
+7. Observe how the robot follows the black line.
+
+#### 💡 Reflection and Thresholding
+
+Instead of detecting specific colors using `color()`, we can measure reflected light intensity using `reflection()`.
+
+```python
+reflection = color_sensor.reflection()
+```
+
+The method returns a value between 0 and 100, where darker surfaces generally produce lower values and lighter surfaces produce higher values.
+
+To distinguish between black and white surfaces, we calculate a **threshold**.
+
+```python
+BLACK_REFLECTION = 10
+WHITE_REFLECTION = 90
+
+THRESHOLD = (BLACK_REFLECTION + WHITE_REFLECTION) / 2
+```
+
+In this example, the threshold is 50.
+
+| Sensor reading | Interpretation |
+|---|---|
+| Below the threshold | Dark surface |
+| At or above the threshold | Light surface |
+
+The black and white reflection values are initial estimates. For better accuracy, measure the actual reflection values of both surfaces and use them to calculate the threshold. This process is called **sensor calibration**.
+
+#### 🧠 Line-Following Algorithm
+
+With a single Color Sensor, the robot follows one edge of the black line rather than its center.
+
+In this activity, the robot follows the right edge of the line using two simple rules:
+
+- If the sensor detects a dark surface, steer right.
+- Otherwise, steer left.
+
+```python
+while True:
+    reflection = color_sensor.reflection()
+
+    if reflection < THRESHOLD:
+        robot.drive(DRIVE_SPEED, TURN_RATE)
+    else:
+        robot.drive(DRIVE_SPEED, -TURN_RATE)
+
+    wait(20)
+```
+
+The robot continuously repeats these instructions to stay near the edge of the line.
+
+This technique is known as **bang-bang control**, a simple form of feedback control in which the robot switches between two fixed steering commands.
+
+Unlike `robot.turn()`, the `robot.drive()` method allows the robot to steer while continuously moving forward.
+
+#### ⚙️ Adjustable Parameters
+
+The performance of the line follower depends on three important parameters.
+
+| Parameter | Initial value | Description |
+|---|---:|---|
+| `DRIVE_SPEED` | 100 mm/s | Controls how fast the robot moves forward. |
+| `TURN_RATE` | 60°/s | Controls how sharply the robot steers. |
+| `THRESHOLD` | 50 | Distinguishes dark and light surfaces. |
+
+Changing these parameters can affect the robot's speed, accuracy, and ability to follow sharp curves.
+
+#### 🧪 Experiment: Optimize the Line Follower
+
+The initial program may struggle with sharp curves, causing the robot to temporarily lose the line or move in circles.
+
+Experiment with different parameter values to improve its performance.
+
+Change only one parameter at a time to understand its individual effect on the robot's behavior. Reset the robot to its starting position before each trial.
+
+| Trial | Drive speed (mm/s) | Turn rate (°/s) | Threshold | Times line lost | Completion time (s) |
+|---|---:|---:|---:|---:|---:|
+| 1 — Baseline | 100 | 60 | 50 | | |
+| 2 | 50 | 60 | 50 | | |
+| 3 | 150 | 60 | 50 | | |
+| 4 | 100 | 30 | 50 | | |
+| 5 | 100 | 90 | 50 | | |
+| 6 | 100 | 120 | 50 | | |
+| 7 | 100 | 60 | 40 | | |
+| 8 | 100 | 60 | 60 | | |
+| 9 — Optimized | | | | | |
+
+For the threshold experiments, temporarily assign the desired value directly to `THRESHOLD`.
+
+Stop the simulation manually when the robot reaches the end of the track. If the robot fails to complete the track, record the trial as incomplete.
+
+After conducting the experiments, combine the most promising parameter values and test your optimized line follower. Repeat the best-performing trial to check its reliability.
+
+#### 📊 Evaluating Performance
+
+Consider the following metrics when evaluating your line follower:
+
+| Metric | Guide question |
+|---|---|
+| Correctness | Can the robot complete the entire track? |
+| Efficiency | How quickly can the robot complete the track? |
+| Reliability | Can the robot consistently complete the track across multiple trials? |
+| Robustness | Can the robot handle both gentle and sharp curves? |
+
+#### 💭 Guide Questions
+
+1. Why does the robot move in a zigzag pattern?
+2. What happens when the driving speed is too high?
+3. What happens when the turning rate is too low or too high?
+4. How does changing the threshold affect the robot's behavior?
+5. Which combination of parameters produces the best overall performance?
+6. Is the fastest line follower necessarily the best line follower?
+7. How can we improve the algorithm so that the robot steers more smoothly?
+
+**Key concept:** A robot's performance depends not only on its algorithm but also on how well its parameters are tuned. Experimentation, calibration, and feedback are important aspects of robotics.
 
 ## 🧱 Testing on an Actual LEGO SPIKE Prime
 

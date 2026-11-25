@@ -17,13 +17,13 @@ The tutorial begins with basic motor control and gradually progresses toward sen
 * 04: Loops
 * 05: Conditions and Decisions (actual TBA)
 * 06: Functions (actual TBA)
-* 07: Color Sensor (coming soon)
-* 08: Distance Sensor (coming soon)
-* 09: Gyro and Orientation (coming soon)
-* 10: Search and React (coming soon)
-* 11: Timers and Match Logic (coming soon)
-* 12: Double Tennis (coming soon)
-* 13: HuskyLens Integration (coming soon)
+* 07: Color Sensor (actual for line following TBA)
+* 08: Distance Sensor (*coming soon*)
+* 09: Gyro and Orientation (*coming soon*)
+* 10: Search and React (*coming soon*)
+* 11: Timers and Match Logic (*coming soon*)
+* 12: Double Tennis (*coming soon*)
+* 13: HuskyLens Integration (*coming soon*)
 
 > The structure may be adjusted as the tutorial progresses.
 
